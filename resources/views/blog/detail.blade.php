@@ -44,7 +44,7 @@
             @endphp
 
             <div class="nav d-flex justify-content-between p-3">
-               <a href="{{ isset($prevArticle) ? route('detail', $prevArticle) : 'javascript:void(0)' }}"
+               <a href="{{ isset($prevArticle) ? route('detail', $prevArticle->slug) : 'javascript:void(0)' }}"
                   class="btn btn-outline-primary page-mover rounded-circle {{ isset($prevArticle) ? '' : 'disabled' }}">
                   <i class="fas fa-arrow-left"></i>
                </a>
@@ -53,7 +53,7 @@
                   Read All
                </a>
 
-               <a href="{{ isset($nextArticle) ? route('detail', $nextArticle) : 'javascript:void(0)' }}"
+               <a href="{{ isset($nextArticle) ? route('detail', $nextArticle->slug) : 'javascript:void(0)' }}"
                   class="btn btn-outline-primary page-mover rounded-circle @empty($nextArticle) disabled @endempty">
                   <i class="fas fa-arrow-right"></i>
                </a>
@@ -67,4 +67,27 @@
       </div>
 
    </div>
+@endsection
+
+@section('categoryLists')
+   <div id="category" class="mb-5">
+      <h4 class="fw-bolder">Category Lists</h4>
+      <ul class="list-group">
+         <li class="list-group-item">
+            <a href="{{ route('index') }}"
+               class="{{ request()->url() == route('index') ? 'active' : '' }}">
+               All Categories
+            </a>
+         </li>
+         @foreach($categories as $category)
+            <li class="list-group-item">
+               <a href="{{ route('baseOnCategory', $category->id) }}"
+                  class="{{ request()->url() == route('baseOnCategory', $category->id) ? 'active' : '' }}">
+                  {{ $category->title }}
+               </a>
+            </li>
+         @endforeach
+      </ul>
+   </div>
+
 @endsection
