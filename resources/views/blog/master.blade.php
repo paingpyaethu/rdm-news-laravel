@@ -61,19 +61,7 @@
 
                @yield('inputSearch')
 
-               <div id="category" class="mb-5">
-                  <h4 class="fw-bolder">Category Lists</h4>
-                  <ul class="list-group">
-                     @foreach($categories as $category)
-                     <li class="list-group-item">
-                        <a href="{{ route('baseOnCategory', $category->id) }}"
-                           class="{{ request()->url() == route('baseOnCategory', $category->id) ? 'active' : '' }}">
-                           {{ $category->title }}
-                        </a>
-                     </li>
-                     @endforeach
-                  </ul>
-               </div>
+               @yield('categoryLists')
 
                @yield('pagination-place')
             </div>

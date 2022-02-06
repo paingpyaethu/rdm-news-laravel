@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -15,6 +17,12 @@ class ArticleController extends Controller
      */
     public function index()
     {
+//       $all = Article::all();
+//
+//       foreach ($all as $a) {
+//          $a->slug = Str::slug($a->title)."-".uniqid();
+//          $a->update();
+//       }
         $articles = Article::when(isset(request()->search), function ($query){
            $search = request()->search;
            $query->where("title","LIKE","%$search%")->orWhere("description","LIKE","%$search%");
@@ -48,6 +56,7 @@ class ArticleController extends Controller
        ]);
        $article = new Article();
        $article->title = $request->title;
+       $article->slug = Str::slug($request->title)."-".uniqid();
        $article->description = $request->description;
        $article->user_id = Auth::id();
        $article->category_id = $request->category;
@@ -94,13 +103,13 @@ class ArticleController extends Controller
           'category' => 'required|exists:categories,id'
        ]);
        $article->title = $request->title;
+       $article->slug = Str::slug($request->title)."-".uniqid();
        $article->description = $request->description;
        $article->category_id = $request->category;
        $article->update();
 
        return redirect()->route('article.index')->with('message', 'The article has been updated successfully.');
     }
-
     /**
      * Remove the specified resource from storage.
      *
