@@ -17,7 +17,7 @@
                </div>
 
                <div class="text-black-50 the-excerpt mt-3">
-                  <p style="white-space: pre-line"> {{ Str::words($article->description, 50)}}</p>
+                  <p style="white-space: pre-line"> {{ $article->excerpt }}</p>
                </div>
 
                <div class="d-flex justify-content-between align-items-center see-more-group">
