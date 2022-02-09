@@ -6,7 +6,7 @@
    @forelse($articles as $article)
          <div class="border-bottom mb-4 pb-4 article-preview">
             <div class="p-0 p-md-3">
-               <a href="{{ route('detail',$article->id) }}" class="fw-bold h4 d-block text-decoration-none" >
+               <a href="{{ route('detail',$article->slug) }}" class="fw-bold h4 d-block text-decoration-none" >
                   {{ $article->title }}
                </a>
 
@@ -17,7 +17,7 @@
                </div>
 
                <div class="text-black-50 the-excerpt mt-3">
-                  <p style="white-space: pre-line"> {{ Str::words($article->description, 50)}}</p>
+                  <p style="white-space: pre-line"> {{ $article->excerpt }}</p>
                </div>
 
                <div class="d-flex justify-content-between align-items-center see-more-group">
@@ -38,13 +38,13 @@
                      </div>
                   </div>
 
-                  <a href="{{ route('detail',$article->id) }}" class="btn btn-outline-primary rounded-pill px-3">Read More</a>
+                  <a href="{{ route('detail',$article->slug) }}" class="btn btn-outline-primary rounded-pill px-3">
+                     Read More
+                  </a>
                </div>
             </div>
          </div>
    @empty
-
-
             <div class="py-5 my-5 text-center text-lg-start">
                <p class="fw-bold text-primary mt-5">Dear Viewer</p>
                <h1 class="fw-bold">
@@ -72,7 +72,6 @@
       </div>
    </div>
 
-
 @endsection
 
 @section('inputSearch')
@@ -94,7 +93,28 @@
       </form>
 
    </div>
+@endsection
 
+@section('categoryLists')
+   <div id="category" class="mb-5">
+      <h4 class="fw-bolder">Category Lists</h4>
+      <ul class="list-group">
+         <li class="list-group-item">
+            <a href="{{ route('index') }}"
+               class="{{ request()->url() == route('index') ? 'active' : '' }}">
+               All Categories
+            </a>
+         </li>
+         @foreach($categories as $category)
+            <li class="list-group-item">
+               <a href="{{ route('baseOnCategory', $category->id) }}"
+                  class="{{ request()->url() == route('baseOnCategory', $category->id) ? 'active' : '' }}">
+                  {{ $category->title }}
+               </a>
+            </li>
+         @endforeach
+      </ul>
+   </div>
 @endsection
 
 @section('pagination-place')
